@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.props" Condition="Exists('..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.props')" />
+  <Import Project="..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x86.120.1.8\build\cef.redist.x86.props" Condition="Exists('..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x86.120.1.8\build\cef.redist.x86.props')" />
+  <Import Project="..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x64.120.1.8\build\cef.redist.x64.props" Condition="Exists('..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x64.120.1.8\build\cef.redist.x64.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{567F1900-E300-4CE4-95DE-0BD39AA1561D}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>ServerLoadMonitoring</RootNamespace>
+    <AssemblyName>ServerLoadMonitoring</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\EL_Installer\ExtensionPacks\ServerLoadMonitoring\10101010\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>\\fss\ElogisticsPacks\ServerLoadMonitoring\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CefSharp, Version=120.1.80.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\lib\net462\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core, Version=120.1.80.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\lib\net462\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Wpf, Version=120.1.80.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Wpf.120.1.80\lib\net462\CefSharp.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\dll\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ElControls">
+      <HintPath>..\dll\ElControls.dll</HintPath>
+    </Reference>
+    <Reference Include="ElDataModels">
+      <HintPath>..\dll\ElDataModels.dll</HintPath>
+    </Reference>
+    <Reference Include="ELImages">
+      <HintPath>..\dll\ELImages.dll</HintPath>
+    </Reference>
+    <Reference Include="ElMessage">
+      <HintPath>..\dll\ElMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\EL_Installer\ServerPacks\10101010\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SnmpSharpNet, Version=0.9.6.0, Culture=neutral, PublicKeyToken=b2181aa3b9571feb, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\SnmpSharpNet.0.9.6\lib\SnmpSharpNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\El_solutions\ServerLoadMonitoring\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\dll\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart">
+      <HintPath>..\dll\Telerik.Windows.Controls.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ConversationalUI">
+      <HintPath>..\dll\Telerik.Windows.Controls.ConversationalUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\dll\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView">
+      <HintPath>..\dll\Telerik.Windows.Controls.GridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\dll\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\dll\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\dll\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.PersistenceFramework, Version=2019.2.618.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\Telerik.Windows.PersistenceFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MetricControl\Metric.xaml.cs">
+      <DependentUpon>Metric.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MetricControl\MetricViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\DayButtonStyleSelector.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\DayButtonTemplateSelector.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\IMonitoringElUserControl.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\JobsHeatmapControl.xaml.cs">
+      <DependentUpon>JobsHeatmapControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerLoadMonitoringData\Helpers\JobsHeatmapControlViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\JobViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\Taskbar.cs" />
+    <Compile Include="ServerLoadMonitoringData\Helpers\TaskCodes.cs" />
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml.cs">
+      <DependentUpon>ServerLoadMonitoringAdditional.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalVM.cs" />
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringData.xaml.cs">
+      <DependentUpon>ServerLoadMonitoringData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringVM.cs" />
+    <Page Include="MetricControl\Metric.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerLoadMonitoringData\Helpers\JobsHeatmapControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="ConfigPlugin.cs" />
+    <Compile Include="MainControl.xaml.cs">
+      <DependentUpon>MainControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ServerLoadMonitoringData\ServerLoadMonitoringData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainControlModel.cs" />
+    <Compile Include="MainControlViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElBasicFunctionServer\BasicFunctionsServer.csproj">
+      <Project>{9824e65a-3dba-4789-aafe-63bbb3626b8f}</Project>
+      <Name>BasicFunctionsServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerLoadMonitoringDataModels\ServerLoadMonitoringDataModels.csproj">
+      <Project>{0991f708-9a59-477c-8787-8ab75a947fdd}</Project>
+      <Name>ServerLoadMonitoringDataModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x64.120.1.8\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x64.120.1.8\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x86.120.1.8\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\El_solutions\ServerLoadMonitoring\packages\cef.redist.x86.120.1.8\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.targets'))" />
+  </Target>
+  <Import Project="..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.targets" Condition="Exists('..\..\El_solutions\ServerLoadMonitoring\packages\CefSharp.Common.120.1.80\build\CefSharp.Common.targets')" />
+</Project>

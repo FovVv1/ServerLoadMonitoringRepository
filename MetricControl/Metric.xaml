@@ -1,0 +1,238 @@
+﻿<UserControl x:Class="ServerLoadMonitoring.MetricControl.Metric"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"      
+             xmlns:local="clr-namespace:ServerLoadMonitoring.MetricControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="800">
+    <Border Background="#FF323234" Height="300" BorderThickness="2 2 0 0" BorderBrush="White">
+        <Grid Name="Base" d:DataContext="{d:DesignInstance local:MetricViewModel, IsDesignTimeCreatable=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="1.4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Name="DB_Chart" Visibility="Hidden" BorderBrush="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.08*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0 10 0 0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="IP : " />
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.Ip}" />
+                    </StackPanel>
+                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="Y">
+                                <telerik:CartesianChartGrid.MajorYLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorYLineStyle>
+                                <telerik:CartesianChartGrid.MajorXLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorXLineStyle>
+                                <telerik:CartesianChartGrid.Resources>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="0.5px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.Resources>
+                            </telerik:CartesianChartGrid>
+                        </telerik:RadCartesianChart.Grid>
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:CategoricalAxis Title="Microservise" Foreground="Gray">
+                                <telerik:CategoricalAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Gray" />
+                                        <Setter Property="FontSize" Value="10px" />
+                                        <Setter Property="Margin" Value="10px" />
+                                        <Setter Property="LayoutTransform">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="270"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </telerik:CategoricalAxis.LabelStyle>
+                            </telerik:CategoricalAxis>
+                        </telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis  Title="Procedure" Foreground="Gray">
+                                <telerik:LinearAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Gray" />
+                                        <Setter Property="FontSize" Value="10px" />
+                                        <Setter Property="Margin" Value="10px" />
+                                    </Style>
+                                </telerik:LinearAxis.LabelStyle>
+                            </telerik:LinearAxis>
+                        </telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:BarSeries CategoryBinding="MicroserviceName" ValueBinding="ProcedureCount" ItemsSource="{Binding LastMetric.MicroservicesProceduresCount}">
+                            <telerik:BarSeries.PointTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#FF000000" BorderThickness="1">
+                                        <!-- Черная обводка -->
+                                        <Grid Background="#99008000">
+                                            <!-- Полупрозрачный зеленый цвет -->
+                                            <!-- Здесь размещаете нужную информацию, используя привязку к данным -->
+                                            <TextBlock FontSize="7pt"  TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding DataItem.ProcedureCount}" FontWeight="Bold"/>
+                                            <!-- Другие элементы по вашему выбору -->
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </telerik:BarSeries.PointTemplate>
+                        </telerik:BarSeries>
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"/>
+                        </telerik:RadCartesianChart.Behaviors>
+                    </telerik:RadCartesianChart>
+                </Grid>
+            </Border>
+            <Border Name="Server_Chart" Visibility="Hidden" BorderBrush="White" Margin="5 5 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.08*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0 10 0 0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="IP : " />
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.Ip}" />
+                    </StackPanel>
+                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="Y">
+                                <telerik:CartesianChartGrid.MajorYLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorYLineStyle>
+                                <telerik:CartesianChartGrid.MajorXLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorXLineStyle>
+                                <telerik:CartesianChartGrid.Resources>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="0.5px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.Resources>
+                            </telerik:CartesianChartGrid>
+                        </telerik:RadCartesianChart.Grid>
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:CategoricalAxis ShowLabels="False" Title="Seconds" Foreground="Gray">
+                            </telerik:CategoricalAxis>
+                        </telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="0" Maximum="100" Title="Percents" Foreground="Gray">
+                                <telerik:LinearAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Gray" />
+                                        <Setter Property="FontSize" Value="10px" />
+                                        <Setter Property="Margin" Value="10px" />
+                                    </Style>
+                                </telerik:LinearAxis.LabelStyle>
+                            </telerik:LinearAxis>
+                        </telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:AreaSeries Stroke="DarkGreen" StrokeThickness="2" Fill="#FF323234" Opacity="0.8"  CategoryBinding="Placement" ValueBinding="CpuUsage" ItemsSource="{Binding Metrics}">
+                        </telerik:AreaSeries>
+                        <telerik:AreaSeries Stroke="{Binding RAMStrokeColor}" StrokeThickness="2" Fill="#FF323234" Opacity="0.5" CategoryBinding="Placement" ValueBinding="UsedMemoryPercents" ItemsSource="{Binding Metrics}">
+                        </telerik:AreaSeries>
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"/>
+                        </telerik:RadCartesianChart.Behaviors>
+                    </telerik:RadCartesianChart>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="0" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="CPU" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
+                        <Grid Grid.Column="1" Width="2" Background="Green" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.CpuUsage}" />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="RAM" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
+                        <Grid Grid.Column="1" Width="2" Background="{Binding RAMStrokeColor}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.UsedMemoryPercents}" >
+                        </TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric.RefreshingData}" />
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Количество пользователей: " />
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric.UsersCount}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

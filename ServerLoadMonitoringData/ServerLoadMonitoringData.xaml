@@ -1,0 +1,458 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ServerLoadMonitoring"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"             
+             xmlns:elEnumControl="clr-namespace:ElControls.ElEnumControl;assembly=ElControls"
+             xmlns:materialControls="clr-namespace:Telerik.Windows.Controls.MaterialControls;assembly=Telerik.Windows.Controls"
+             xmlns:calendar="clr-namespace:Telerik.Windows.Controls.Calendar;assembly=Telerik.Windows.Controls.Input"
+             xmlns:helpers="clr-namespace:ServerLoadMonitoring.Helpers"
+             xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
+             xmlns:radGridViewConfig="clr-namespace:ElControls.RadGridViewConfig;assembly=ElControls"
+             xmlns:serverLoadMonitoringDataModels="clr-namespace:ServerLoadMonitoringDataModels;assembly=ServerLoadMonitoringDataModels"
+             x:Class="ServerLoadMonitoring.ServerLoadMonitoringData.ServerLoadMonitoringData"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+
+   
+        <local:ServerLoadMonitoringDataViewModel x:Key="ServerLoadMonitoringViewModel"/>
+        <!--<radGridViewConfig:RadGridViewAdditionalConfigurator x:Key="GridServerLoadMonitoringsData" ConfigurationId="79345FB1-DCED-4378-8263-970A85D85299"/>-->
+        <telerik:StringToGlyphConverter x:Key="StringToGlyphConverter" />
+        <elEnumControl:EnumConverter x:Key="EnumConverter"/>
+
+        <Style x:Key="ButtonRibbonStyle" TargetType="{x:Type telerik:RadButton}">
+            <Setter Property="Height" Value="41"/>
+            <Setter Property="Width" Value="41"/>
+            <Setter Property="IsBackgroundVisible" Value="false"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Focusable" Value="false"/>
+        </Style>
+
+        <Style x:Key="ImageButtonRibbonStyle" TargetType="{x:Type Image}">
+            <Setter Property="Margin" Value="4 6 4 4"/>
+        </Style>
+
+        <Style x:Key="MaskTextInputStyle" TargetType="{x:Type telerik:RadMaskedTextInput}">
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Mask" Value="###"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="3 0 0 0"/>
+            <Setter Property="Placeholder" Value=" "/>
+            <Style.Triggers>
+                <Trigger Property="IsEmpty" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                </Trigger>
+
+                <!--<Trigger Property="Validation.HasError" Value="True">
+					<Setter Property="ToolTip"
+					        Value="{Binding RelativeSource={RelativeSource Self},
+			                    Path=(Validation.Errors)[0].ErrorContent}" />
+					<Setter Property="Foreground" Value="Red" />
+				</Trigger>-->
+                <Trigger Property="IsFocused" Value="false">
+                    <Setter Property="Padding" Value="0 0 0 0" />
+
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+
+        <SolidColorBrush x:Key="TrackBackgroundNormalOfficeBlack" Color="#AAA"/>
+        <SolidColorBrush x:Key="TrackBackgroundCheckedOfficeBlack" Color="#FF92FE27"/>
+        <SolidColorBrush x:Key="BorderBrushOfficeBlack" Color="#999"/>
+
+        <SolidColorBrush x:Key="ThumbBackgroundNormalOfficeBlack" Color="White"/>
+        <SolidColorBrush x:Key="ThumbBackgroundCheckedOfficeBlack" Color="White"/>
+        <SolidColorBrush x:Key="ThumbBorderBrushdCheckedOfficeBlack" Color="#FF92FE27"/>
+        <SolidColorBrush x:Key="TumbBorderBrushMouseOverBrushOfficeBlack" Color="#FF92FE27"/>
+
+
+        <Style x:Key="ToggleSwitchButtonStyleOfficeBlack" TargetType="{x:Type telerik:RadToggleButton}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Background" Value="{StaticResource TrackBackgroundNormalOfficeBlack}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushOfficeBlack}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type telerik:RadToggleButton}">
+                        <Grid UseLayoutRounding="True">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="Unchecked" To="Checked">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Thumb">
+                                                    <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                    <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="35" KeySpline="0,0.5,0.5,1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition From="Checked" To="UnChecked">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Thumb">
+                                                    <SplineDoubleKeyFrame KeyTime="0" Value="30"/>
+                                                    <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0" KeySpline="0, 0.6, 0.6, 1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Thumb">
+                                                <SplineDoubleKeyFrame KeyTime="0" Value="35"/>
+                                                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="35" KeySpline="0,0.5,0.5,1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <Storyboard/>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid SnapsToDevicePixels="True">
+                                <Rectangle x:Name="Track" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Left" Height="7"  Stroke="{x:Null}" VerticalAlignment="Center" Width="53" RadiusY="4.5" RadiusX="4.5" />
+
+                                <Ellipse x:Name="Thumb" Fill="{StaticResource TrackBackgroundNormalOfficeBlack}" HorizontalAlignment="Left" StrokeThickness="1" Stroke="{TemplateBinding BorderBrush}" 
+                                         VerticalAlignment="Top" Width="19" Height="19" RenderTransformOrigin="0.5,0.5">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform X="0" Y="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                            <ContentPresenter x:Name="Content"
+                                Margin="{TemplateBinding Padding}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                RecognizesAccessKey="True"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Thumb" Property="StrokeThickness" Value="2" />
+                                <Setter TargetName="Thumb" Property="Stroke" Value="{StaticResource ThumbBorderBrushdCheckedOfficeBlack}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Opacity" Value="0.4" />
+                                <Setter TargetName="Thumb" Property="Fill" Value="{StaticResource ThumbBackgroundCheckedOfficeBlack}" />
+                                <Setter TargetName="Thumb" Property="Stroke" Value="{StaticResource ThumbBorderBrushdCheckedOfficeBlack}" />
+                                <Setter TargetName="Track" Property="Fill" Value="{StaticResource TrackBackgroundCheckedOfficeBlack}" />
+
+                                <Setter TargetName="Content" Property="HorizontalAlignment" Value="Left" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        <Style x:Key="MenuItemContainer" TargetType="{x:Type telerik:RadMenuItem}">
+            <Setter Property="Icon" Value="{Binding Icon}"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="IconTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <telerik:RadGlyph Glyph="{Binding Converter={StaticResource StringToGlyphConverter}}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="IsSeparator" Value="{Binding IsSeparator}"/>
+            <Setter Property="Header" Value="{Binding Header}"/>
+            <Setter Property="ItemsSource" Value="{Binding Items}"/>
+            <Setter Property="Command" Value="{Binding Command}"/>
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+            <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+        </Style>
+
+
+        <Style TargetType="{x:Type telerik:GridViewHeaderCell}">
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style TargetType="{x:Type telerik:GridViewRow}">
+            <Setter Property="Background" Value="#262626"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type telerik:GridViewCell}">
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsInEditMode, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type telerik:GridViewRow}}}" Value="true">
+                    <Setter Property="IsInEditMode" Value="True"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CalendarStyle" TargetType="{x:Type telerik:RadCalendar}">
+            <Setter Property="AreWeekNamesVisible" Value="False" />
+            <Setter Property="Height" Value="225"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="DayButtonStyleSelector" Value="{DynamicResource CustomStyleSelector}"/>
+            <Setter Property="DayButtonStyle" Value="{x:Null}"/>
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+
+        <helpers:DayButtonTemplateSelector x:Key="DayButtonTemplateSelector">
+            <helpers:DayButtonTemplateSelector.DefaultTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="-5 -7 0 0">
+
+                        <TextBlock x:Name="txt" Text="{Binding Text}" Padding="0">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu ItemContainerStyle="{StaticResource MenuItemContainer}"
+                                                        FontWeight="Normal"
+                                                        Foreground="#FFBBBBBB" />
+
+                            </telerik:RadContextMenu.ContextMenu>
+
+                        </TextBlock>
+
+                    </StackPanel>
+                </DataTemplate>
+            </helpers:DayButtonTemplateSelector.DefaultTemplate>
+        </helpers:DayButtonTemplateSelector>
+
+        <helpers:DayButtonStyleSelector x:Key="CustomStyleSelector">
+
+            <helpers:DayButtonStyleSelector.SpecialStyleDisabledDay>
+                <Style TargetType="{x:Type calendar:CalendarButton}">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="DimGray" Opacity="0.6"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="IsEnabled" Value="True"/>
+                </Style>
+            </helpers:DayButtonStyleSelector.SpecialStyleDisabledDay>
+            <helpers:DayButtonStyleSelector.SpecialStyleDraftScheme>
+                <Style TargetType="{x:Type calendar:CalendarButton}">
+
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="IndianRed" Opacity="0.6"/>
+                        </Setter.Value>
+                    </Setter>
+
+
+                </Style>
+            </helpers:DayButtonStyleSelector.SpecialStyleDraftScheme>
+
+            <helpers:DayButtonStyleSelector.SpecialStyleEnabledScheme>
+                <Style TargetType="{x:Type calendar:CalendarButton}">
+                    <Setter Property="Foreground" Value="CadetBlue"/>
+
+                </Style>
+            </helpers:DayButtonStyleSelector.SpecialStyleEnabledScheme>
+
+
+            <helpers:DayButtonStyleSelector.SpecialStyleActiveScheme>
+                <Style TargetType="{x:Type calendar:CalendarButton}">
+                    <Setter Property="Foreground" Value="#AAAAAA"/>
+                </Style>
+            </helpers:DayButtonStyleSelector.SpecialStyleActiveScheme>
+
+        </helpers:DayButtonStyleSelector>
+
+
+
+
+
+        <Style x:Key="RowName">
+            <Setter Property="TextBlock.Foreground" Value="#c8c8c8" />
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.FontSize" Value="12"/>
+        </Style>
+
+
+
+        <Style x:Key="TitleStyle">
+            <Setter Property="TextBlock.Foreground" Value="#999999" />
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center"/>
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.FontSize" Value="10"/>
+        </Style>
+
+
+        <Style x:Key="BorderCells" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#646464" />
+        </Style>
+
+
+        <Style TargetType="{x:Type materialControls:FluentControl}" >
+            <Setter Property="IsRippleEnabled" Value="False" />
+        </Style>
+
+        <Style x:Key="TitleStringRightPanel" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 7 0 10"/>
+            <Setter Property="Foreground" Value ="#999999"/>
+            <Setter Property="Width" Value="210"/>
+            <Setter Property="FontSize" Value="12"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="DataStringRightPanel">
+            <Setter Property="Foreground" Value ="#CCCCCC"/>
+            <Setter Property="Margin" Value="0 7 0 10"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="#FF323234" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="DimGray" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LeftTabs"  TargetType="TabItem">
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Foreground" Value="Green" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="#FF323234" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="DimGray" />
+                    <Setter Property="Foreground" Value="#FF323234" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </UserControl.Resources>
+
+        
+ 
+    <telerik:RadBusyIndicator x:Name="Base" IsBusy="{Binding IsBusy}">
+        <!--Шаблон индикатора загрузки грида-->
+        <telerik:RadBusyIndicator.BusyContentTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Загрузка данных... " FontWeight="Bold" />
+                </StackPanel>
+            </DataTemplate>
+        </telerik:RadBusyIndicator.BusyContentTemplate>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="4"  Grid.ColumnSpan="3">
+                <ScrollViewer>
+                    <ItemsControl  ItemsSource="{Binding MetricControlsList,Source={StaticResource ServerLoadMonitoringViewModel}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+            <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" BorderThickness="0 0 0 0" BorderBrush="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="0.2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <telerik:RadPieChart Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <!-- Устанавливаем стратегию умных меток -->
+                        <telerik:RadPieChart.SmartLabelsStrategy>
+                            <telerik:PieChartSmartLabelsStrategy DisplayMode="Spider" />
+                        </telerik:RadPieChart.SmartLabelsStrategy>
+
+                        <!-- Устанавливаем палитру для всего RadPieChart -->
+                        <telerik:RadPieChart.Palette>
+                            <telerik:ChartPalette>
+                                <telerik:ChartPalette.GlobalEntries>
+                                    <!-- Добавьте цвета, которые вы хотите использовать -->
+                                    <telerik:PaletteEntry Fill="#1f77b4" />
+                                    <telerik:PaletteEntry Fill="#ff7f0e" />
+                                    <telerik:PaletteEntry Fill="#2ca02c" />
+                                    <telerik:PaletteEntry Fill="#d62728" />
+                                    <telerik:PaletteEntry Fill="#8c564b" />
+                                    <telerik:PaletteEntry Fill="#e374c2" />
+                                    <telerik:PaletteEntry Fill="#7f7f7f" />
+                                    <telerik:PaletteEntry Fill="#bcbd22" />
+                                    <telerik:PaletteEntry Fill="#17becf" />
+                                    <!-- Добавьте дополнительные цвета по вашему выбору -->
+                                </telerik:ChartPalette.GlobalEntries>
+                            </telerik:ChartPalette>
+                        </telerik:RadPieChart.Palette>
+
+                        <telerik:RadPieChart.Series>
+                            <telerik:PieSeries ItemsSource="{Binding LogsErrorCounts, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="ErrorCount">
+                                <telerik:PieSeries.LabelDefinitions>
+                                    <!-- Используем StringFormat для форматирования подписей -->
+                                    <telerik:ChartSeriesLabelDefinition Binding="MicroserviceNameAndCount" Format="{}{0:P0}" />
+                                </telerik:PieSeries.LabelDefinitions>
+
+                                <!-- Устанавливаем настройки коннекторов для меток -->
+                                <telerik:PieSeries.LabelConnectorsSettings>
+                                    <telerik:ChartSeriesLabelConnectorsSettings />
+                                </telerik:PieSeries.LabelConnectorsSettings>
+                            </telerik:PieSeries>
+                        </telerik:RadPieChart.Series>
+                    </telerik:RadPieChart>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="40 0 0 0">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="Общее количество ошибок: "/>
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding AllLogsErrorsCount.ErrorCount, Source={StaticResource ServerLoadMonitoringViewModel}}"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" BorderThickness="0 0 0 0" BorderBrush="White">
+            </Border>
+            <Button Content="Получить IP серверов" Grid.Column="0"  Grid.Row="0" Command="{Binding CommandUpdateListOfMetricsSource, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />
+            <Button Content="Получить метрики по IP" Grid.Column="1"  Grid.Row="0" Command="{Binding CommandUpdateReadyMetrics, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />
+            <Button Content="Получить готовые метрики" Grid.Column="2"  Grid.Row="0" Command="{Binding CommandReadReadyMetrics, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />
+            <Button Content="Включить автоматическое получение" Grid.Column="3"  Grid.Row="0" Command="{Binding CommandAllMetricsProcceses, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />
+            <helpers:JobsHeatmapControl Grid.Column="1" x:Name="HeatmapControl" VerticalContentAlignment="Top" HorizontalContentAlignment="Right" Loaded="HeatmapControl_Loaded" />
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

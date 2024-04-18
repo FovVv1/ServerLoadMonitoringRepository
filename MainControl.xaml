@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="ServerLoadMonitoring.MainControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ServerLoadMonitoring"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:materialControls="clr-namespace:Telerik.Windows.Controls.MaterialControls;assembly=Telerik.Windows.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+
+
+        <telerik:StringToGlyphConverter x:Key="StringToGlyphConverter" />
+		<Style TargetType="telerik:RadNavigationViewItem" >
+			<Style.Setters>
+				
+				<Setter Property="Icon" Value="{Binding Image}" />
+				<Setter Property="Visibility"  Value="Hidden" />
+				<Setter Property="ToolTip" Value="{Binding Title}"/>
+
+				
+
+			</Style.Setters>
+
+			<!--<Style.Triggers>
+				<Trigger Property="telerik:RadNavigationViewItem.IsSelected" Value="True">
+					<Setter Property="IconTemplate">
+						<Setter.Value>
+							<DataTemplate>
+								<telerik:RadGlyph Foreground="#3312CC12" Glyph="{Binding Converter={StaticResource StringToGlyphConverter}}" />
+							</DataTemplate>
+						</Setter.Value>
+					</Setter>
+
+				</Trigger>
+				<DataTrigger  Binding="{Binding Path=IsPaneOpen, ElementName=navigationView}" Value="true">
+					<Setter Property="ToolTipService.IsEnabled" Value="false"/>
+				</DataTrigger>
+			</Style.Triggers>-->
+		</Style>
+
+
+		<DataTemplate x:Key="TransitionControlContentTemplate">
+			<ContentControl Content="{Binding Content}"/>
+		</DataTemplate>
+
+		<DataTemplate x:Key="PaneHeaderTemplate">
+			<Border BorderBrush="White" BorderThickness="1" Margin="3">
+				<TextBlock Text="{Binding}" Margin="5"/>
+			</Border>
+		</DataTemplate>
+
+		<Style TargetType="materialControls:FluentControl" >
+			<Setter Property="IsRippleEnabled" Value="False" />
+		</Style>
+
+	</UserControl.Resources>
+
+	<Grid Name="Base">
+		<!--<telerik:RadTransitionControl Content="{Binding ControlsList}" ContentTemplate="{StaticResource TransitionControlContentTemplate}" Foreground="Black" Duration="0:0:0.1">
+			<telerik:RadTransitionControl.Transition>
+				<telerik:FadeTransition />
+			</telerik:RadTransitionControl.Transition>
+		</telerik:RadTransitionControl>-->
+
+
+        
+        <telerik:RadNavigationView x:Name="navigationView" 
+		                           ItemsSource="{Binding ControlsList}" 
+		                           AutoChangeDisplayMode="False"
+		                           SelectedIndex="{Binding SelectedIndex}" 
+		                           PaneHeaderHeight="0" CompactPaneWidth="0">
+
+			<telerik:RadNavigationView.Content>
+				<telerik:RadTransitionControl Content="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=telerik:RadNavigationView}}"  Foreground="Black" Duration="0:0:0.1">
+					<telerik:RadTransitionControl.Transition>
+						<telerik:FadeTransition />
+					</telerik:RadTransitionControl.Transition>
+				</telerik:RadTransitionControl>
+			</telerik:RadNavigationView.Content>
+		</telerik:RadNavigationView>
+
+
+
+	</Grid>
+</UserControl>
