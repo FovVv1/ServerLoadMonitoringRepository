@@ -383,33 +383,38 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="4"  Grid.ColumnSpan="3">
-                <ScrollViewer>
-                    <ItemsControl  ItemsSource="{Binding MetricControlsList,Source={StaticResource ServerLoadMonitoringViewModel}}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
+                <ItemsControl  ItemsSource="{Binding MetricControlsList,Source={StaticResource ServerLoadMonitoringViewModel}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </Grid>
-            <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" BorderThickness="0 0 0 0" BorderBrush="White">
+            <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Background="#FF323234">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="0.2*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <telerik:RadPieChart Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="40 0 0 0">
+                        <TextBlock FontSize="20" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="LightGray" Text="Ошибки по микросервисам"/>
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text=""/>
+                    </StackPanel>
+                    <telerik:RadPieChart Palette="Crystal" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <!-- Устанавливаем стратегию умных меток -->
                         <telerik:RadPieChart.SmartLabelsStrategy>
                             <telerik:PieChartSmartLabelsStrategy DisplayMode="Spider" />
                         </telerik:RadPieChart.SmartLabelsStrategy>
 
+                        
+
                         <!-- Устанавливаем палитру для всего RadPieChart -->
-                        <telerik:RadPieChart.Palette>
+                        <!--<telerik:RadPieChart.Palette>
                             <telerik:ChartPalette>
                                 <telerik:ChartPalette.GlobalEntries>
-                                    <!-- Добавьте цвета, которые вы хотите использовать -->
+                                    --><!-- Добавьте цвета, которые вы хотите использовать --><!--
                                     <telerik:PaletteEntry Fill="#1f77b4" />
                                     <telerik:PaletteEntry Fill="#ff7f0e" />
                                     <telerik:PaletteEntry Fill="#2ca02c" />
@@ -419,13 +424,13 @@
                                     <telerik:PaletteEntry Fill="#7f7f7f" />
                                     <telerik:PaletteEntry Fill="#bcbd22" />
                                     <telerik:PaletteEntry Fill="#17becf" />
-                                    <!-- Добавьте дополнительные цвета по вашему выбору -->
+                                    --><!-- Добавьте дополнительные цвета по вашему выбору --><!--
                                 </telerik:ChartPalette.GlobalEntries>
                             </telerik:ChartPalette>
-                        </telerik:RadPieChart.Palette>
+                        </telerik:RadPieChart.Palette>-->
 
                         <telerik:RadPieChart.Series>
-                            <telerik:PieSeries ItemsSource="{Binding LogsErrorCounts, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="ErrorCount">
+                            <telerik:DoughnutSeries SelectedPointOffset="0.25" RadiusFactor="0.9" ItemsSource="{Binding LogsErrorCounts, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="ErrorCount">
                                 <telerik:PieSeries.LabelDefinitions>
                                     <!-- Используем StringFormat для форматирования подписей -->
                                     <telerik:ChartSeriesLabelDefinition Binding="MicroserviceNameAndCount" Format="{}{0:P0}" />
@@ -435,17 +440,56 @@
                                 <telerik:PieSeries.LabelConnectorsSettings>
                                     <telerik:ChartSeriesLabelConnectorsSettings />
                                 </telerik:PieSeries.LabelConnectorsSettings>
-                            </telerik:PieSeries>
+                            </telerik:DoughnutSeries>
                         </telerik:RadPieChart.Series>
                     </telerik:RadPieChart>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="40 0 0 0">
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="Общее количество ошибок: "/>
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding AllLogsErrorsCount.ErrorCount, Source={StaticResource ServerLoadMonitoringViewModel}}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="40 0 0 0">
+                        <TextBlock FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="Ошибки : "/>
+                        <TextBlock FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding AllLogsErrorsCount.ErrorCount, Source={StaticResource ServerLoadMonitoringViewModel}}"/>
                     </StackPanel>
-                    
                 </Grid>
             </Border>
-            <Border Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" BorderThickness="0 0 0 0" BorderBrush="White">
+            <Border Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Background="#FF323234">
+                <telerik:RadPieChart Palette="Windows8"  Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <!-- Устанавливаем стратегию умных меток -->
+                    <telerik:RadPieChart.SmartLabelsStrategy>
+                        <telerik:PieChartSmartLabelsStrategy DisplayMode="Spider" />
+                    </telerik:RadPieChart.SmartLabelsStrategy>
+
+
+                    <!-- Устанавливаем палитру для всего RadPieChart -->
+                    <!--<telerik:RadPieChart.Palette>
+                        <telerik:ChartPalette>
+                            <telerik:ChartPalette.GlobalEntries>
+                                --><!-- Добавьте цвета, которые вы хотите использовать --><!--
+                                <telerik:PaletteEntry Fill="#1f77b4" />
+                                <telerik:PaletteEntry Fill="#2ca02c" />
+                                <telerik:PaletteEntry Fill="#ff7f0e" />
+                                <telerik:PaletteEntry Fill="#d62728" />
+                                <telerik:PaletteEntry Fill="#8c564b" />
+                                <telerik:PaletteEntry Fill="#e374c2" />
+                                <telerik:PaletteEntry Fill="#7f7f7f" />
+                                <telerik:PaletteEntry Fill="#bcbd22" />
+                                <telerik:PaletteEntry Fill="#17becf" />
+                                --><!-- Добавьте дополнительные цвета по вашему выбору --><!--
+                            </telerik:ChartPalette.GlobalEntries>
+                        </telerik:ChartPalette>
+                    </telerik:RadPieChart.Palette>-->
+
+                    <telerik:RadPieChart.Series>
+                        <telerik:DoughnutSeries RadiusFactor="0.9" ItemsSource="{Binding LogsErrorCounts, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="ErrorCount">
+                            <telerik:PieSeries.LabelDefinitions>
+                                <!-- Используем StringFormat для форматирования подписей -->
+                                <telerik:ChartSeriesLabelDefinition Binding="MicroserviceNameAndCount" Format="{}{0:P0}" />
+                            </telerik:PieSeries.LabelDefinitions>
+
+                            <!-- Устанавливаем настройки коннекторов для меток -->
+                            <telerik:PieSeries.LabelConnectorsSettings>
+                                <telerik:ChartSeriesLabelConnectorsSettings />
+                            </telerik:PieSeries.LabelConnectorsSettings>
+                        </telerik:DoughnutSeries>
+                    </telerik:RadPieChart.Series>
+                </telerik:RadPieChart>
             </Border>
             <Button Content="Получить IP серверов" Grid.Column="0"  Grid.Row="0" Command="{Binding CommandUpdateListOfMetricsSource, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />
             <Button Content="Получить метрики по IP" Grid.Column="1"  Grid.Row="0" Command="{Binding CommandUpdateReadyMetrics, Source={StaticResource ServerLoadMonitoringViewModel}}" CommandParameter="{Binding ElementName=navigationView}" />

@@ -18,6 +18,20 @@ namespace ServerLoadMonitoring.MetricControl
 {
     public class MetricViewModel : ViewModelBase
     {
+        private SolidColorBrush _cpuStrokeColor = new SolidColorBrush(Colors.Green);
+
+        public SolidColorBrush cpuStrokeColor
+        {
+            get { return _cpuStrokeColor; }
+            set
+            {
+                if (_cpuStrokeColor != value)
+                {
+                    _cpuStrokeColor = value;
+                    OnPropertyChanged("cpuStrokeColor");
+                }
+            }
+        }
 
         private SolidColorBrush _ramStrokeColor = new SolidColorBrush(Colors.Yellow);
 
@@ -36,33 +50,51 @@ namespace ServerLoadMonitoring.MetricControl
 
         private DispatcherTimer timer;
 
+        
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             GetMetrics();
         }
 
-        private DispatcherTimer timerChangeRAMStrokeColor;
+        private DispatcherTimer timerChangeStrokeColor;
+
 
         private void Timer_TickChangeRAMStrokeColor(object sender, EventArgs e)
         {
-
-            if (LastMetric.UsedMemoryPercents > 90) 
+            if (LastMetric is ServerUtilization lastMetric)
             {
-                if (RAMStrokeColor.Color == Colors.Yellow)
+                if (lastMetric.UsedMemoryPercents > 90)
                 {
-                    RAMStrokeColor.Color = Colors.Red;
+                    if (RAMStrokeColor.Color == Colors.Yellow)
+                    {
+                        RAMStrokeColor.Color = Colors.Red;
+                    }
+                    else { RAMStrokeColor.Color = Colors.Yellow; }
                 }
-                else { RAMStrokeColor.Color = Colors.Yellow; }
-            }else if (RAMStrokeColor.Color != Colors.Yellow)
-            {
-                RAMStrokeColor.Color = Colors.Yellow;
+                else if (RAMStrokeColor.Color != Colors.Yellow)
+                {
+                    RAMStrokeColor.Color = Colors.Yellow;
+                }
+                if (lastMetric.CpuUsage > 90)
+                {
+                    if (cpuStrokeColor.Color == Colors.Green)
+                    {
+                        cpuStrokeColor.Color = Colors.Red;
+                    }
+                    else { cpuStrokeColor.Color = Colors.Green; }
+                }
+                else if (cpuStrokeColor.Color != Colors.Green)
+                {
+                    cpuStrokeColor.Color = Colors.Green;
+                }
             }
         }
+
 
         public MetricViewModel()
         {
             Metrics = new ObservableCollection<IMetric>();
-            
         }
         public MetricViewModel(MetricsControlConfig config)
         {
@@ -71,17 +103,17 @@ namespace ServerLoadMonitoring.MetricControl
             
 
             this.timer = new DispatcherTimer();
-            this.timer.Interval = TimeSpan.FromSeconds(5);
+            this.timer.Interval = TimeSpan.FromSeconds(2);
             this.timer.Tick += Timer_Tick;
             this.timer.Start();
 
             if(config.metricType == ServerLoadMonitoringDataModels.Enums.MetricType.ServerUtilization)
             {
                 LastMetric = new ServerUtilization();
-                this.timerChangeRAMStrokeColor = new DispatcherTimer();
-                this.timerChangeRAMStrokeColor.Interval = TimeSpan.FromSeconds(1);
-                this.timerChangeRAMStrokeColor.Tick += Timer_TickChangeRAMStrokeColor;
-                this.timerChangeRAMStrokeColor.Start();
+                this.timerChangeStrokeColor = new DispatcherTimer();
+                this.timerChangeStrokeColor.Interval = TimeSpan.FromSeconds(1);
+                this.timerChangeStrokeColor.Tick += Timer_TickChangeRAMStrokeColor;
+                this.timerChangeStrokeColor.Start();
             }
         }
 

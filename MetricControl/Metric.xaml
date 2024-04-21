@@ -7,7 +7,34 @@
              xmlns:local="clr-namespace:ServerLoadMonitoring.MetricControl"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
-    <Border Background="#FF323234" Height="300" BorderThickness="2 2 0 0" BorderBrush="White">
+    <UserControl.Resources>
+        <local:MetricDataConverter x:Key="MetricDataConverter" />
+        <Style x:Key="TextBlockForTitleOfInfo" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <!-- Добавьте другие сеттеры для настройки стиля по вашему желанию -->
+        </Style>
+        <Style x:Key="TextBlockForInfo" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5 0 0 0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <!-- Добавьте другие сеттеры для настройки стиля по вашему желанию -->
+        </Style>
+        <Style x:Key="MetricMainBorder" TargetType="Border">
+            <Setter Property="BorderThickness" Value="2 2 2 0"/>
+            <Setter Property="BorderBrush" Value="Green"/>
+            <Setter Property="Background" Value="#FF323234"/>
+            <!-- Добавьте другие сеттеры для настройки стиля по вашему желанию -->
+        </Style>
+    </UserControl.Resources>
+    <Border Name="BaseBorder" Height="300" Style="{StaticResource MetricMainBorder}">
         <Grid Name="Base" d:DataContext="{d:DesignInstance local:MetricViewModel, IsDesignTimeCreatable=True}">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -17,7 +44,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="1.4*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Name="DB_Chart" Visibility="Hidden" BorderBrush="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Border Name="DB_Chart" IsEnabled="False" Visibility="Collapsed" BorderBrush="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.08*"></RowDefinition>
@@ -31,7 +58,7 @@
                         <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="IP : " />
                         <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.Ip}" />
                     </StackPanel>
-                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 10" HorizontalAlignment="Stretch">
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y">
                                 <telerik:CartesianChartGrid.MajorYLineStyle>
@@ -114,7 +141,7 @@
                     </telerik:RadCartesianChart>
                 </Grid>
             </Border>
-            <Border Name="Server_Chart" Visibility="Hidden" BorderBrush="White" Margin="5 5 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Border Name="Server_Chart" IsEnabled="False" Visibility="Collapsed" BorderBrush="White" Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.08*"></RowDefinition>
@@ -122,13 +149,19 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Margin="0 10 0 0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="IP : " />
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.Ip}" />
+                    <StackPanel Margin="0 10 0 0" Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"  Foreground="LightGray" Text="Server IP : " />
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"  Foreground="LightGray" Text="{Binding LastMetric.Ip}" />
                     </StackPanel>
-                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Margin="0 10 0 0" Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"  Foreground="LightGray" Text="Подключенные пользователи : " />
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"  Foreground="LightGray" Text="{Binding LastMetric.UsersCount}" />
+                    </StackPanel>
+                    <telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 0 0 10">
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y">
                                 <telerik:CartesianChartGrid.MajorYLineStyle>
@@ -188,7 +221,7 @@
                     </telerik:RadCartesianChart>
                 </Grid>
             </Border>
-            <Grid Grid.Row="0" Grid.Column="2">
+            <Grid x:Name="ServerModul" IsEnabled="False" Visibility="Hidden" Grid.Row="0" Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -198,7 +231,7 @@
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
+                <Border  Grid.Row="0" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -206,11 +239,11 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="CPU" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
-                        <Grid Grid.Column="1" Width="2" Background="Green" />
-                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.CpuUsage}" />
+                        <Grid Grid.Column="1" Width="2" Margin="0 15 0 15" Background="{Binding cpuStrokeColor}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric, ConverterParameter=CpuUsage, Converter={StaticResource MetricDataConverter}}" />
                     </Grid>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
+                <Border  Grid.Row="1" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -218,19 +251,174 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="RAM" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
-                        <Grid Grid.Column="1" Width="2" Background="{Binding RAMStrokeColor}" />
-                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric.UsedMemoryPercents}" >
+                        <Grid Grid.Column="1" Width="2" Margin="0 15 0 15" Background="{Binding RAMStrokeColor}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="LightGray" Text="{Binding LastMetric, ConverterParameter=UsedMemoryPercents, Converter={StaticResource MetricDataConverter}}" >
                         </TextBlock>
                     </Grid>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="White">
-                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric.RefreshingData}" />
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric, ConverterParameter=RefreshingData, Converter={StaticResource MetricDataConverter}}" />
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Количество пользователей: " />
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric.UsersCount}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Visibility="Hidden" Grid.Row="0" Orientation="Horizontal" Margin="5 0 0 0">
+                            <TextBlock  FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric, ConverterParameter=processorName, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                        <Grid Grid.Row="1" Grid.RowSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource TextBlockForTitleOfInfo}" Text="Частота" />
+                                <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=currentClockSpeed, Converter={StaticResource MetricDataConverter}}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource TextBlockForTitleOfInfo}" Text="Время работы" />
+                                <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=UpTime, Converter={StaticResource MetricDataConverter}}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource TextBlockForTitleOfInfo}" Text="Процессов" />
+                                <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=Processes, Converter={StaticResource MetricDataConverter}}" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Visibility="Hidden" Grid.Row="0" Orientation="Horizontal" Margin="5 0 0 0">
+                            <TextBlock FontSize="15" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="RAM " />
+                            <TextBlock FontSize="15" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric, ConverterParameter=InstalledMemory, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                        <Grid Grid.Row="1" Grid.RowSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource TextBlockForTitleOfInfo}" Text="Используется" />
+                                <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=UsedMemory, Converter={StaticResource MetricDataConverter}}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource TextBlockForTitleOfInfo}" Text="Доступно" />
+                                <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=availableMemory, Converter={StaticResource MetricDataConverter}}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                
+                             </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid x:Name="DatabaseModule" IsEnabled="False" Visibility="Collapsed" Grid.Row="0" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border  Grid.Row="1" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="5 0 0 0"  Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Общий размер" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=TotalDatabaseSizeBytes, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                        <StackPanel Margin="5 0 0 0"  Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Используется" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=UsedSpaceBytes, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border  Grid.Row="2" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="5 0 0 0"  Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Свободно" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=FreeSpaceBytes, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                        <StackPanel Margin="5 0 0 0"  Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Количество ХП" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=NumberOfStoredProcedures, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding LastMetric, ConverterParameter=RefreshingData, Converter={StaticResource MetricDataConverter}}" />
+                </Border>
+                <Border  Margin="5 0 0 0"  Grid.Row="1" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Размер журнала транзакций БД" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=TransactionLogSizeBytes , Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Используется" Style="{StaticResource TextBlockForTitleOfInfo}"/>
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=UsedTransactionLogSpaceBytes, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border  Margin="5 0 0 0"  Grid.Row="2" Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                            <TextBlock Grid.Column="0" Text="Свободно" Style="{StaticResource TextBlockForTitleOfInfo}" />
+                            <TextBlock Style="{StaticResource TextBlockForInfo}" Text="{Binding LastMetric, ConverterParameter=FreeTransactionLogSpaceBytes, Converter={StaticResource MetricDataConverter}}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>

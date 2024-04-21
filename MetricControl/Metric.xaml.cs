@@ -33,11 +33,24 @@ namespace ServerLoadMonitoring.MetricControl
             if (config.metricType == MetricType.ServerUtilization)
             {
                 Server_Chart.Visibility = Visibility.Visible;
-            } else if (config.metricType == MetricType.DatabaseUtilization)
+                Server_Chart.IsEnabled = true; // включаем график сервера
+                ServerModul.Visibility = Visibility.Visible;
+                ServerModul.IsEnabled = true;
+                
+            }
+            else if (config.metricType == MetricType.DatabaseUtilization)
             {
                 DB_Chart.Visibility = Visibility.Visible;
+                DB_Chart.IsEnabled = true; // включаем график базы данных
+                DatabaseModule.Visibility = Visibility.Visible;
+                DatabaseModule.IsEnabled = true;
             }
             Base.DataContext = new MetricViewModel(config);
+        }
+        public void LastControl()
+        {
+            Thickness newThickness = new Thickness(2,2,2,2);
+            BaseBorder.BorderThickness = newThickness;
         }
     }
 }

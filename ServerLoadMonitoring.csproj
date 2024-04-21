@@ -140,6 +140,7 @@
     <Compile Include="MetricControl\Metric.xaml.cs">
       <DependentUpon>Metric.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MetricControl\MetricDataConverter.cs" />
     <Compile Include="MetricControl\MetricViewModel.cs" />
     <Compile Include="ServerLoadMonitoringData\Helpers\DayButtonStyleSelector.cs" />
     <Compile Include="ServerLoadMonitoringData\Helpers\DayButtonTemplateSelector.cs" />

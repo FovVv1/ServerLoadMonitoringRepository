@@ -36,6 +36,8 @@ using System.Threading;
 using System.Windows.Media.TextFormatting;
 using ServerLoadMonitoring.MetricControl;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
+using System.Data;
 //using System.Windows.Forms;
 
 namespace ServerLoadMonitoring
@@ -74,6 +76,7 @@ namespace ServerLoadMonitoring
             CommandChangeModeSaveConfig = new DelegateCommand(OnChangeModeSaveConfig);
             CommandLoadSettingControlOnOpen = new DelegateCommand(OnLoadSettingControlOnOpen);
             CommandSaveSettingControlOnClosed = new DelegateCommand(OnSaveSettingControlOnClosed);
+            CommandGetTasksFromTaskManager = new DelegateCommand(OnGetTasksFromTaskManager);
             //***************************
             //CommandMouseDoubleClickGrid = new DelegateCommand(OnMouseDoubleClickGrid);
 
@@ -89,6 +92,17 @@ namespace ServerLoadMonitoring
         }
 
         #region Properties
+
+        private ObservableCollection<TaskCountItem> _TasksCount = new ObservableCollection<TaskCountItem>();
+        public ObservableCollection<TaskCountItem> TasksCount
+        {
+            get => _TasksCount;
+            set
+            {
+                _TasksCount = value;
+                OnPropertyChanged("TasksCount");
+            }
+        }
 
         private ErrorCountItem _AllLogsErrorsCount = new ErrorCountItem();
         public ErrorCountItem AllLogsErrorsCount
@@ -474,6 +488,7 @@ namespace ServerLoadMonitoring
                 {
                     MetricControlsList.Add(new Metric(resource));
                 }
+                MetricControlsList.Last().LastControl();
             }
             catch (Exception e)
             {
@@ -519,6 +534,21 @@ namespace ServerLoadMonitoring
                 ConfigPlugin.connectionElServer.SendMessage(
                     new ElMessageClient("ServerLoadMonitoring", "UpdateReadyMetrics", Response_CommandUpdateReadyMetrics), null);
                 
+            }
+            catch (Exception e)
+            {
+                LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+            }
+        }
+
+        public ICommand CommandGetTasksFromTaskManager { get; set; }
+        private void OnGetTasksFromTaskManager(object obj)
+        {
+            try
+            {
+                ConfigPlugin.connectionElServer.SendMessage(
+                    new ElMessageClient("ServerLoadMonitoring", "GetTasksFromTaskManager", Response_CommandGetTasksFromTaskManager), null);
+
             }
             catch (Exception e)
             {
@@ -1032,6 +1062,8 @@ namespace ServerLoadMonitoring
 
                 // Присваиваем новую коллекцию переменной LogsErrorCounts
                     LogsErrorCounts = updatedErrorCounts;
+
+                ///
             }
             else
             {
@@ -1092,6 +1124,18 @@ namespace ServerLoadMonitoring
             }
         }
 
+        private void Response_CommandGetTasksFromTaskManager(string data)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+
+            }
+        }
         private void Response_CommandAllMetricsProcceses(string data)
         {
             try
