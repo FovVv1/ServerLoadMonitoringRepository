@@ -38,6 +38,7 @@ using ServerLoadMonitoring.MetricControl;
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
 using System.Data;
+using System.Windows.Documents;
 //using System.Windows.Forms;
 
 namespace ServerLoadMonitoring
@@ -86,7 +87,8 @@ namespace ServerLoadMonitoring
 
             _selectedDateTo = DateTime.Today;
             _selectedDateFrom = DateTime.Today.AddDays(-1);
-
+            
+            
             //IsAllSubnetUnloading = false;
             //Mask = 24;
         }
@@ -489,6 +491,28 @@ namespace ServerLoadMonitoring
                     MetricControlsList.Add(new Metric(resource));
                 }
                 MetricControlsList.Last().LastControl();
+                //Thread thread = new Thread(new ThreadStart(() =>
+                //{
+                //    // Создаем новый диспетчер для STA-потока
+                //    Dispatcher.CurrentDispatcher.BeginInvoke(
+                //        DispatcherPriority.Normal,
+                //        new Action(() =>
+                //        {
+                //            // Вызываем метод UpdateUI в STA-потоке
+                //            foreach (var resource in MetricsResources)
+                //            {
+                //                MetricControlsList.Add(new Metric(resource));
+                //            }
+                //            
+                //        }));
+
+                //    // Запускаем обработку сообщений STA-потока
+                //    Dispatcher.Run();
+                //}));
+                //// Запускаем поток
+                //thread.SetApartmentState(ApartmentState.STA);
+                //thread.Start();
+
             }
             catch (Exception e)
             {
@@ -515,6 +539,7 @@ namespace ServerLoadMonitoring
         {
             try
             {
+                
                 OnPropertyChanged("ServerMetricsControl");
                 ConfigPlugin.connectionElServer.SendMessage(
                     new ElMessageClient("ServerLoadMonitoring", "UpdateListOfMetricsSource", Response_CommandUpdateListOfMetricsSource),
@@ -1092,6 +1117,7 @@ namespace ServerLoadMonitoring
         {
             try
             {
+                OnGetTasksFromTaskManager(null);
                 GetLogsInfo();
                 var definition = new { MetricsSources = new List<MetricsControlConfig>() };
                 var tmp = JsonConvert.DeserializeAnonymousType(data, definition);
@@ -1115,7 +1141,7 @@ namespace ServerLoadMonitoring
         {
             try
             {
-
+                
             }
             catch (Exception e)
             {
@@ -1128,7 +1154,9 @@ namespace ServerLoadMonitoring
         {
             try
             {
-
+                var definition = new { TasksCount = new List<TaskCountItem>() };
+                var tmp = JsonConvert.DeserializeAnonymousType(data, definition);
+                TasksCount = new ObservableCollection<TaskCountItem>(tmp.TasksCount);
             }
             catch (Exception e)
             {

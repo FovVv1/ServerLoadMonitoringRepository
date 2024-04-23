@@ -62,9 +62,8 @@ namespace ServerLoadMonitoring.MetricControl
 
         private void Timer_TickChangeRAMStrokeColor(object sender, EventArgs e)
         {
-            if (LastMetric is ServerUtilization lastMetric)
-            {
-                if (lastMetric.UsedMemoryPercents > 90)
+           
+                if (LastMetric.UsedMemoryPercents > 90)
                 {
                     if (RAMStrokeColor.Color == Colors.Yellow)
                     {
@@ -76,7 +75,7 @@ namespace ServerLoadMonitoring.MetricControl
                 {
                     RAMStrokeColor.Color = Colors.Yellow;
                 }
-                if (lastMetric.CpuUsage > 90)
+                if (LastMetric.CpuUsage > 90)
                 {
                     if (cpuStrokeColor.Color == Colors.Green)
                     {
@@ -88,7 +87,6 @@ namespace ServerLoadMonitoring.MetricControl
                 {
                     cpuStrokeColor.Color = Colors.Green;
                 }
-            }
         }
 
 
@@ -100,21 +98,26 @@ namespace ServerLoadMonitoring.MetricControl
         {
             Metrics = new ObservableCollection<IMetric>();
             this.Config = config;
-            
+
 
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromSeconds(2);
             this.timer.Tick += Timer_Tick;
             this.timer.Start();
-
-            if(config.metricType == ServerLoadMonitoringDataModels.Enums.MetricType.ServerUtilization)
+       
+            if (config.metricType == ServerLoadMonitoringDataModels.Enums.MetricType.ServerUtilization)
             {
                 LastMetric = new ServerUtilization();
-                this.timerChangeStrokeColor = new DispatcherTimer();
-                this.timerChangeStrokeColor.Interval = TimeSpan.FromSeconds(1);
-                this.timerChangeStrokeColor.Tick += Timer_TickChangeRAMStrokeColor;
-                this.timerChangeStrokeColor.Start();
             }
+            if (config.metricType == ServerLoadMonitoringDataModels.Enums.MetricType.DatabaseUtilization)
+            {
+                LastMetric = new DatabaseUtilization();
+            }
+            this.timerChangeStrokeColor = new DispatcherTimer();
+            this.timerChangeStrokeColor.Interval = TimeSpan.FromSeconds(1);
+            this.timerChangeStrokeColor.Tick += Timer_TickChangeRAMStrokeColor;
+            this.timerChangeStrokeColor.Start();
+            
         }
 
         ReaderWriterLockSlim rwLockMetrics = new ReaderWriterLockSlim();

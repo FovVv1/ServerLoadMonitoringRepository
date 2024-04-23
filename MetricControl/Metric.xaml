@@ -94,6 +94,64 @@
                             </telerik:CartesianChartGrid>
                         </telerik:RadCartesianChart.Grid>
                         <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:CategoricalAxis ShowLabels="False" Title="Seconds" Foreground="Gray">
+                            </telerik:CategoricalAxis>
+                        </telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="0" Maximum="100" Title="Percents" Foreground="Gray">
+                                <telerik:LinearAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Gray" />
+                                        <Setter Property="FontSize" Value="10px" />
+                                        <Setter Property="Margin" Value="10px" />
+                                    </Style>
+                                </telerik:LinearAxis.LabelStyle>
+                            </telerik:LinearAxis>
+                        </telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:AreaSeries Stroke="DarkGreen" StrokeThickness="2" Fill="#FF323234" Opacity="0.8"  CategoryBinding="Placement" ValueBinding="CpuUsage" ItemsSource="{Binding Metrics}">
+                        </telerik:AreaSeries>
+                        <telerik:AreaSeries Stroke="{Binding RAMStrokeColor}" StrokeThickness="2" Fill="#FF323234" Opacity="0.5" CategoryBinding="Placement" ValueBinding="UsedMemoryPercents" ItemsSource="{Binding Metrics}">
+                        </telerik:AreaSeries>
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"/>
+                        </telerik:RadCartesianChart.Behaviors>
+                    </telerik:RadCartesianChart>
+                    <!--<telerik:RadCartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 10" HorizontalAlignment="Stretch">
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="Y">
+                                <telerik:CartesianChartGrid.MajorYLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorYLineStyle>
+                                <telerik:CartesianChartGrid.MajorXLineStyle>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="1px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.MajorXLineStyle>
+                                <telerik:CartesianChartGrid.Resources>
+                                    <Style TargetType="Line">
+                                        <Setter Property="Stroke">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF8B8B8B" Opacity="0.5" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="StrokeThickness" Value="0.5px" />
+                                    </Style>
+                                </telerik:CartesianChartGrid.Resources>
+                            </telerik:CartesianChartGrid>
+                        </telerik:RadCartesianChart.Grid>
+                        <telerik:RadCartesianChart.HorizontalAxis>
                             <telerik:CategoricalAxis Title="Microservise" Foreground="Gray">
                                 <telerik:CategoricalAxis.LabelStyle>
                                     <Style TargetType="TextBlock">
@@ -124,12 +182,12 @@
                             <telerik:BarSeries.PointTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="#FF000000" BorderThickness="1">
-                                        <!-- Черная обводка -->
+                                        --><!-- Черная обводка --><!--
                                         <Grid Background="#99008000">
-                                            <!-- Полупрозрачный зеленый цвет -->
-                                            <!-- Здесь размещаете нужную информацию, используя привязку к данным -->
+                                            --><!-- Полупрозрачный зеленый цвет -->
+                                            <!-- Здесь размещаете нужную информацию, используя привязку к данным --><!--
                                             <TextBlock FontSize="7pt"  TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding DataItem.ProcedureCount}" FontWeight="Bold"/>
-                                            <!-- Другие элементы по вашему выбору -->
+                                            --><!-- Другие элементы по вашему выбору --><!--
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -138,7 +196,7 @@
                         <telerik:RadCartesianChart.Behaviors>
                             <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"/>
                         </telerik:RadCartesianChart.Behaviors>
-                    </telerik:RadCartesianChart>
+                    </telerik:RadCartesianChart>-->
                 </Grid>
             </Border>
             <Border Name="Server_Chart" IsEnabled="False" Visibility="Collapsed" BorderBrush="White" Margin="0 5 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">

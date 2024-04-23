@@ -46,11 +46,13 @@ namespace ServerLoadMonitoring.MetricControl
                 DatabaseModule.IsEnabled = true;
             }
             Base.DataContext = new MetricViewModel(config);
+            
         }
         public void LastControl()
         {
             Thickness newThickness = new Thickness(2,2,2,2);
             BaseBorder.BorderThickness = newThickness;
         }
+    
     }
 }

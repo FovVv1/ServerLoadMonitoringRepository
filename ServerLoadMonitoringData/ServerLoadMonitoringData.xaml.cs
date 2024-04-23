@@ -34,8 +34,7 @@ namespace ServerLoadMonitoring.ServerLoadMonitoringData {
 			InitializeComponent();
 			Base.Visibility = Visibility.Hidden;
 			StartVm(null, null);
-        
-		}
+        }
        
 		public void Dispose()
         {

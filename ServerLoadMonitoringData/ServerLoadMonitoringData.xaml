@@ -477,10 +477,10 @@
                     </telerik:RadPieChart.Palette>-->
 
                     <telerik:RadPieChart.Series>
-                        <telerik:DoughnutSeries RadiusFactor="0.9" ItemsSource="{Binding LogsErrorCounts, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="ErrorCount">
+                        <telerik:DoughnutSeries RadiusFactor="0.9" ItemsSource="{Binding TasksCount, Source={StaticResource ServerLoadMonitoringViewModel}}" ValueBinding="Count">
                             <telerik:PieSeries.LabelDefinitions>
                                 <!-- Используем StringFormat для форматирования подписей -->
-                                <telerik:ChartSeriesLabelDefinition Binding="MicroserviceNameAndCount" Format="{}{0:P0}" />
+                                <telerik:ChartSeriesLabelDefinition Binding="LANAndCount" Format="{}{0:P0}" />
                             </telerik:PieSeries.LabelDefinitions>
 
                             <!-- Устанавливаем настройки коннекторов для меток -->
